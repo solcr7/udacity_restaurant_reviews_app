@@ -88,18 +88,6 @@ initMap = () => {
 
   updateRestaurants();
 }
-/* window.initMap = () => {
-  let loc = {
-    lat: 40.722216,
-    lng: -73.987501
-  };
-  self.map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 12,
-    center: loc,
-    scrollwheel: false
-  });
-  updateRestaurants();
-} */
 
 /**
  * Update page and map for current restaurants.
@@ -179,6 +167,7 @@ createRestaurantHTML = (restaurant) => {
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
+  more.setAttribute('role', 'button');
   li.append(more)
 
   return li
@@ -199,14 +188,20 @@ addMarkersToMap = (restaurants = self.restaurants) => {
   });
 
 } 
-/* addMarkersToMap = (restaurants = self.restaurants) => {
-  restaurants.forEach(restaurant => {
-    // Add marker to the map
-    const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map);
-    google.maps.event.addListener(marker, 'click', () => {
-      window.location.href = marker.url
-    });
-    self.markers.push(marker);
-  });
-} */
 
+
+if (navigator.serviceWorker) {
+  navigator.serviceWorker.register('/sw.js')
+  .then(registration => {
+    console.log("yeah")
+  }).catch(error => {
+    console.log("oh nooo")
+  });
+}
+
+/* if(navigator.serviceWorker) return;
+navigator.serviceWorker.register('/sw.js').then(function() {
+  console.log('Registration worked');
+}).catch(function() {
+  console.log('Registration failed');
+}); */
